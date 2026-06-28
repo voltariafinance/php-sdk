@@ -1,13 +1,12 @@
 {
   "name": "voltaria/voltaria-sdk",
-  "version": "2.34.5",
   "description": "Voltaria PHP Library",
   "keywords": [
     "voltaria",
     "api",
     "sdk"
   ],
-  "license": [],
+  "license": "MIT",
   "require": {
     "php": "^8.1",
     "ext-json": "*",
