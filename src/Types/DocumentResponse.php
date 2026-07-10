@@ -76,6 +76,12 @@ class DocumentResponse extends JsonSerializableType
     public ?DateTime $expiryDate;
 
     /**
+     * @var ?string $distributionId The ID of the associated distribution (coupon), if applicable
+     */
+    #[JsonProperty('distribution_id')]
+    public ?string $distributionId;
+
+    /**
      * @var DateTime $createdAt The date and time when the document was created
      */
     #[JsonProperty('created_at'), Date(Date::TYPE_DATETIME)]
@@ -95,6 +101,7 @@ class DocumentResponse extends JsonSerializableType
      *   folderPath?: ?string,
      *   documentDate?: ?DateTime,
      *   expiryDate?: ?DateTime,
+     *   distributionId?: ?string,
      * } $values
      */
     public function __construct(
@@ -111,6 +118,7 @@ class DocumentResponse extends JsonSerializableType
         $this->folderPath = $values['folderPath'] ?? null;
         $this->documentDate = $values['documentDate'] ?? null;
         $this->expiryDate = $values['expiryDate'] ?? null;
+        $this->distributionId = $values['distributionId'] ?? null;
         $this->createdAt = $values['createdAt'];
     }
 

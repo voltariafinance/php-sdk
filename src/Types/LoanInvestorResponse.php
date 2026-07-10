@@ -119,6 +119,18 @@ class LoanInvestorResponse extends JsonSerializableType
     public ClientBaseInfo $client;
 
     /**
+     * @var ?string $outstandingPrincipal Remaining principal for installments with status active or overdue, net of any repayments already made
+     */
+    #[JsonProperty('outstanding_principal')]
+    public ?string $outstandingPrincipal;
+
+    /**
+     * @var ?string $remainingAmount Remaining amount (principal and interest) for installments with status active or overdue, net of any repayments already made
+     */
+    #[JsonProperty('remaining_amount')]
+    public ?string $remainingAmount;
+
+    /**
      * @var ?bool $paymentToTheClient Whether the loan disbursement is paid directly to the client (as opposed to the partner).
      */
     #[JsonProperty('payment_to_the_client')]
@@ -144,6 +156,8 @@ class LoanInvestorResponse extends JsonSerializableType
      *   earlySettlementDate?: ?DateTime,
      *   earlySettlementAmount?: ?string,
      *   data?: ?array<string, mixed>,
+     *   outstandingPrincipal?: ?string,
+     *   remainingAmount?: ?string,
      *   paymentToTheClient?: ?bool,
      * } $values
      */
@@ -168,6 +182,8 @@ class LoanInvestorResponse extends JsonSerializableType
         $this->earlySettlementAmount = $values['earlySettlementAmount'] ?? null;
         $this->data = $values['data'] ?? null;
         $this->client = $values['client'];
+        $this->outstandingPrincipal = $values['outstandingPrincipal'] ?? null;
+        $this->remainingAmount = $values['remainingAmount'] ?? null;
         $this->paymentToTheClient = $values['paymentToTheClient'] ?? null;
     }
 

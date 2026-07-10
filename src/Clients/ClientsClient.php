@@ -22,6 +22,8 @@ use Voltaria\Types\PaginatedResponseLimitRequestResponse;
 use Voltaria\Clients\Requests\LimitRequestCreatePayload;
 use Voltaria\Types\LimitRequestResponse;
 use Voltaria\Clients\Requests\ListOnboardingClientsRequest;
+use Voltaria\Clients\Requests\ListClientPortalUsersRequest;
+use Voltaria\Types\PaginatedResponseClientUserResponse;
 use Voltaria\Clients\Requests\ClientUserInviteRequest;
 use Voltaria\Types\ClientUserResponse;
 use Voltaria\Clients\Requests\ListClientWaiversRequest;
@@ -527,6 +529,69 @@ class ClientsClient
                     return null;
                 }
                 return ClientResponse::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new VoltariaException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new VoltariaException(message: $e->getMessage(), previous: $e);
+        }
+        throw new VoltariaApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Paginated list of portal users belonging to a client.
+     *
+     * @param string $clientId
+     * @param ListClientPortalUsersRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?PaginatedResponseClientUserResponse
+     * @throws VoltariaException
+     * @throws VoltariaApiException
+     */
+    public function listClientPortalUsers(string $clientId, ListClientPortalUsersRequest $request = new ListClientPortalUsersRequest(), ?array $options = null): ?PaginatedResponseClientUserResponse
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $query = [];
+        if ($request->page != null) {
+            $query['page'] = $request->page;
+        }
+        if ($request->pageSize != null) {
+            $query['page_size'] = $request->pageSize;
+        }
+        if ($request->orderBy != null) {
+            $query['order_by'] = $request->orderBy;
+        }
+        if ($request->q != null) {
+            $query['q'] = $request->q;
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Sandbox->value,
+                    path: "v2/clients/{$clientId}/users",
+                    method: HttpMethod::GET,
+                    query: $query,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return PaginatedResponseClientUserResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new VoltariaException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

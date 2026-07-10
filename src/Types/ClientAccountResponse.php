@@ -4,6 +4,8 @@ namespace Voltaria\Types;
 
 use Voltaria\Core\Json\JsonSerializableType;
 use Voltaria\Core\Json\JsonProperty;
+use DateTime;
+use Voltaria\Core\Types\Date;
 
 class ClientAccountResponse extends JsonSerializableType
 {
@@ -86,12 +88,19 @@ class ClientAccountResponse extends JsonSerializableType
     public string $status;
 
     /**
+     * @var DateTime $createdAt Timestamp when the account was created.
+     */
+    #[JsonProperty('created_at'), Date(Date::TYPE_DATETIME)]
+    public DateTime $createdAt;
+
+    /**
      * @param array{
      *   id: string,
      *   accountHolderName: string,
      *   accountHolderType: value-of<AccountHolderTypeEnum>,
      *   currency: value-of<CurrencyEnum>,
      *   status: value-of<AccountStatusEnum>,
+     *   createdAt: DateTime,
      *   label?: ?string,
      *   sortCode?: ?string,
      *   accountNumber?: ?string,
@@ -118,6 +127,7 @@ class ClientAccountResponse extends JsonSerializableType
         $this->accountType = $values['accountType'] ?? null;
         $this->address = $values['address'] ?? null;
         $this->status = $values['status'];
+        $this->createdAt = $values['createdAt'];
     }
 
     /**

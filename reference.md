@@ -653,6 +653,95 @@ $client->clients->rejectOnboarding(
 </dl>
 </details>
 
+<details><summary><code>$client-&gt;clients-&gt;listClientPortalUsers($clientId, $request) -> ?PaginatedResponseClientUserResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Paginated list of portal users belonging to a client.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->clients->listClientPortalUsers(
+    'client_id',
+    new ListClientPortalUsersRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$clientId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$page:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$pageSize:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$orderBy:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$q:** `?string` — Query string for filtering. Format: "field:operator:value;...". Supported fields: id, email, status, first_name, last_name. Supported operators: is, in, not_in, contains, not_contains, like, not_like, ilike, not_ilike, gt, gte, lt, lte, starts_with, ends_with, is_null, is_not_null.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>$client-&gt;clients-&gt;addClientPortalUser($clientId, $request) -> ?ClientUserResponse</code></summary>
 <dl>
 <dd>
@@ -1585,6 +1674,282 @@ $client->accounts->getClientAccount(
 <dd>
 
 **$accountId:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Collections
+<details><summary><code>$client-&gt;collections-&gt;listCollectionActions($request) -> ?PaginatedResponseCollectionActionResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve all collection actions configured for your partner account.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->collections->listCollectionActions(
+    new ListCollectionActionsRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$page:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$pageSize:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$orderBy:** `?string` — Field to order the results by, e.g., 'created_at:desc,updated_at:asc'
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$q:** `?string` — Query string for filtering. Format: "field:operator:value;...". Supported fields: id, name, action_type, is_active, timing. Supported operators: is, in, not_in, contains, not_contains, like, not_like, ilike, not_ilike, gt, gte, lt, lte, starts_with, ends_with, is_null, is_not_null.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;collections-&gt;listCollectionActionLogs($request) -> ?PaginatedResponseCollectionActionLogResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve collection action logs for your partner account. Supports filtering by client, loan, installment, status, or action type.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->collections->listCollectionActionLogs(
+    new ListCollectionActionLogsRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$clientId:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$loanId:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$installmentId:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$status:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$actionType:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$page:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$pageSize:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$orderBy:** `?string` — Field to order the results by, e.g., 'created_at:desc,updated_at:asc'
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$q:** `?string` — Query string for filtering. Format: "field:operator:value;...". Supported fields: id, collection_action_id, action_type, status, client_id, loan_id, installment_id, scheduled_for. Supported operators: is, in, not_in, contains, not_contains, like, not_like, ilike, not_ilike, gt, gte, lt, lte, starts_with, ends_with, is_null, is_not_null.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;collections-&gt;updateCollectionActionLog($logId, $request) -> ?CollectionActionLogResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update the status and notes of a collection action log.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->collections->updateCollectionActionLog(
+    'log_id',
+    new CollectionActionLogUpdatePayload([
+        'status' => CollectionActionLogUpdatePayloadStatus::Completed->value,
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$logId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$status:** `string` — The updated status of the action: 'completed' or 'failed'
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$notes:** `?string` — Notes about this action
     
 </dd>
 </dl>
@@ -3023,6 +3388,224 @@ $client->installments->deleteInstallment(
 </details>
 
 ## Loans
+<details><summary><code>$client-&gt;loans-&gt;listLoanReviewRequests($request) -> ?PaginatedResponseLoanReviewRequestResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List loan review requests for your partner account, optionally filtered by loan ID or client ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->loans->listLoanReviewRequests(
+    new ListLoanReviewRequestsRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$loanId:** `?string` — Filter by loan ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$clientId:** `?string` — Filter by client ID
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$page:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$pageSize:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$orderBy:** `?string` — Field to order the results by, e.g., 'created_at:desc,updated_at:asc'
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$q:** `?string` — Query string for filtering. Format: "field:operator:value;...". Supported fields: id, loan_id, client_id, status. Supported operators: is, in, not_in, contains, not_contains, like, not_like, ilike, not_ilike, gt, gte, lt, lte, starts_with, ends_with, is_null, is_not_null.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;loans-&gt;createLoanReviewRequest($request) -> ?LoanReviewRequestResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Ask Voltaria to review a not-yet-disbursed (pending or pre-approved) loan before disbursement.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->loans->createLoanReviewRequest(
+    new LoanReviewRequestCreatePayload([
+        'loanId' => 'loan_1234567890abcdef',
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$loanId:** `string` — The ID of the loan to be reviewed. Must be a not-yet-disbursed (pending or pre-approved) loan belonging to the current partner
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$notes:** `?string` — Optional note from the requester explaining the review request
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;loans-&gt;getLoanReviewRequest($requestId) -> ?LoanReviewRequestResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a specific loan review request by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->loans->getLoanReviewRequest(
+    'request_id',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$requestId:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>$client-&gt;loans-&gt;listLoans($request) -> ?PaginatedResponseLoanResponseWithClientInfo</code></summary>
 <dl>
 <dd>

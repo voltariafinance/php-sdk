@@ -4,8 +4,8 @@ namespace Voltaria\Loans;
 
 use Psr\Http\Client\ClientInterface;
 use Voltaria\Core\Client\RawClient;
-use Voltaria\Loans\Requests\ListLoansRequest;
-use Voltaria\Types\PaginatedResponseLoanResponseWithClientInfo;
+use Voltaria\Loans\Requests\ListLoanReviewRequestsRequest;
+use Voltaria\Types\PaginatedResponseLoanReviewRequestResponse;
 use Voltaria\Exceptions\VoltariaException;
 use Voltaria\Exceptions\VoltariaApiException;
 use Voltaria\Core\Json\JsonApiRequest;
@@ -13,6 +13,10 @@ use Voltaria\Environments;
 use Voltaria\Core\Client\HttpMethod;
 use JsonException;
 use Psr\Http\Client\ClientExceptionInterface;
+use Voltaria\Loans\Requests\LoanReviewRequestCreatePayload;
+use Voltaria\Types\LoanReviewRequestResponse;
+use Voltaria\Loans\Requests\ListLoansRequest;
+use Voltaria\Types\PaginatedResponseLoanResponseWithClientInfo;
 use Voltaria\Loans\Requests\LoanCreatePayload;
 use Voltaria\Types\LoanResponseWithInstallments;
 use Voltaria\Core\Json\JsonDecoder;
@@ -55,6 +59,171 @@ class LoansClient
     ) {
         $this->client = $client;
         $this->options = $options ?? [];
+    }
+
+    /**
+     * List loan review requests for your partner account, optionally filtered by loan ID or client ID.
+     *
+     * @param ListLoanReviewRequestsRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?PaginatedResponseLoanReviewRequestResponse
+     * @throws VoltariaException
+     * @throws VoltariaApiException
+     */
+    public function listLoanReviewRequests(ListLoanReviewRequestsRequest $request = new ListLoanReviewRequestsRequest(), ?array $options = null): ?PaginatedResponseLoanReviewRequestResponse
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $query = [];
+        if ($request->loanId != null) {
+            $query['loan_id'] = $request->loanId;
+        }
+        if ($request->clientId != null) {
+            $query['client_id'] = $request->clientId;
+        }
+        if ($request->page != null) {
+            $query['page'] = $request->page;
+        }
+        if ($request->pageSize != null) {
+            $query['page_size'] = $request->pageSize;
+        }
+        if ($request->orderBy != null) {
+            $query['order_by'] = $request->orderBy;
+        }
+        if ($request->q != null) {
+            $query['q'] = $request->q;
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Sandbox->value,
+                    path: "v2/loans/review-requests",
+                    method: HttpMethod::GET,
+                    query: $query,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return PaginatedResponseLoanReviewRequestResponse::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new VoltariaException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new VoltariaException(message: $e->getMessage(), previous: $e);
+        }
+        throw new VoltariaApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Ask Voltaria to review a not-yet-disbursed (pending or pre-approved) loan before disbursement.
+     *
+     * @param LoanReviewRequestCreatePayload $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?LoanReviewRequestResponse
+     * @throws VoltariaException
+     * @throws VoltariaApiException
+     */
+    public function createLoanReviewRequest(LoanReviewRequestCreatePayload $request, ?array $options = null): ?LoanReviewRequestResponse
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Sandbox->value,
+                    path: "v2/loans/review-requests",
+                    method: HttpMethod::POST,
+                    body: $request,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return LoanReviewRequestResponse::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new VoltariaException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new VoltariaException(message: $e->getMessage(), previous: $e);
+        }
+        throw new VoltariaApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Retrieve a specific loan review request by its ID.
+     *
+     * @param string $requestId
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?LoanReviewRequestResponse
+     * @throws VoltariaException
+     * @throws VoltariaApiException
+     */
+    public function getLoanReviewRequest(string $requestId, ?array $options = null): ?LoanReviewRequestResponse
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Sandbox->value,
+                    path: "v2/loans/review-requests/{$requestId}",
+                    method: HttpMethod::GET,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return LoanReviewRequestResponse::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new VoltariaException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new VoltariaException(message: $e->getMessage(), previous: $e);
+        }
+        throw new VoltariaApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
     }
 
     /**

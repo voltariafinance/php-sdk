@@ -10,97 +10,97 @@ use Voltaria\Core\Types\Date;
 class ClientUserResponse extends JsonSerializableType
 {
     /**
-     * @var string $id
+     * @var string $id Unique client user identifier.
      */
     #[JsonProperty('id')]
     public string $id;
 
     /**
-     * @var string $partnerId
+     * @var string $partnerId ID of the partner this user belongs to.
      */
     #[JsonProperty('partner_id')]
     public string $partnerId;
 
     /**
-     * @var string $clientId
+     * @var string $clientId ID of the client this user belongs to.
      */
     #[JsonProperty('client_id')]
     public string $clientId;
 
     /**
-     * @var string $email
+     * @var string $email Email address of the portal user.
      */
     #[JsonProperty('email')]
     public string $email;
 
     /**
-     * @var string $roleId
+     * @var string $roleId ID of the role assigned to the user.
      */
     #[JsonProperty('role_id')]
     public string $roleId;
 
     /**
-     * @var ?RoleResponse $role
+     * @var ?RoleResponse $role Role assigned to the user.
      */
     #[JsonProperty('role')]
     public ?RoleResponse $role;
 
     /**
-     * @var value-of<ClientUserStatusEnum> $status
+     * @var value-of<ClientUserStatusEnum> $status Account status. One of: `pending`, `active`, `inactive`.
      */
     #[JsonProperty('status')]
     public string $status;
 
     /**
-     * @var bool $isEmailVerified
+     * @var bool $isEmailVerified Whether the user has verified their email address.
      */
     #[JsonProperty('is_email_verified')]
     public bool $isEmailVerified;
 
     /**
-     * @var value-of<KycStatusEnum> $kycStatus
+     * @var value-of<KycStatusEnum> $kycStatus KYC verification status of the user.
      */
     #[JsonProperty('kyc_status')]
     public string $kycStatus;
 
     /**
-     * @var ?string $firstName
+     * @var ?string $firstName First name of the user.
      */
     #[JsonProperty('first_name')]
     public ?string $firstName;
 
     /**
-     * @var ?string $lastName
+     * @var ?string $lastName Last name of the user.
      */
     #[JsonProperty('last_name')]
     public ?string $lastName;
 
     /**
-     * @var ?string $phone
+     * @var ?string $phone Phone number of the user.
      */
     #[JsonProperty('phone')]
     public ?string $phone;
 
     /**
-     * @var ?bool $is2FaEnabled
+     * @var ?bool $is2FaEnabled Whether two-factor authentication is enabled for this user.
      */
     #[JsonProperty('is_2fa_enabled')]
     public ?bool $is2FaEnabled;
 
     /**
-     * @var ?bool $is2FaRequired
+     * @var ?bool $is2FaRequired Whether two-factor authentication is required for this user.
      */
     #[JsonProperty('is_2fa_required')]
     public ?bool $is2FaRequired;
 
     /**
-     * @var DateTime $createdAt
+     * @var DateTime $createdAt Timestamp when the user was created.
      */
     #[JsonProperty('created_at'), Date(Date::TYPE_DATETIME)]
     public DateTime $createdAt;
 
     /**
-     * @var DateTime $updatedAt
+     * @var DateTime $updatedAt Timestamp when the user was last updated.
      */
     #[JsonProperty('updated_at'), Date(Date::TYPE_DATETIME)]
     public DateTime $updatedAt;

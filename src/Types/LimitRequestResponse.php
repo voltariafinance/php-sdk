@@ -52,6 +52,12 @@ class LimitRequestResponse extends JsonSerializableType
     public ?string $waiverId;
 
     /**
+     * @var value-of<LimitRequestSourceEnum> $source The origin of the request. 'partner' indicates the request was submitted by your account; 'internal' indicates it was initiated by Winyield on your behalf.
+     */
+    #[JsonProperty('source')]
+    public string $source;
+
+    /**
      * @var DateTime $createdAt The timestamp when the limit request was created
      */
     #[JsonProperty('created_at'), Date(Date::TYPE_DATETIME)]
@@ -64,6 +70,7 @@ class LimitRequestResponse extends JsonSerializableType
      *   status: value-of<LimitRequestStatusEnum>,
      *   requestedLimit: string,
      *   reason: string,
+     *   source: value-of<LimitRequestSourceEnum>,
      *   createdAt: DateTime,
      *   response?: ?string,
      *   waiverId?: ?string,
@@ -79,6 +86,7 @@ class LimitRequestResponse extends JsonSerializableType
         $this->reason = $values['reason'];
         $this->response = $values['response'] ?? null;
         $this->waiverId = $values['waiverId'] ?? null;
+        $this->source = $values['source'];
         $this->createdAt = $values['createdAt'];
     }
 

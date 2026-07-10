@@ -5,6 +5,7 @@ namespace Voltaria;
 use Voltaria\Clients\ClientsClient;
 use Voltaria\Sandbox\SandboxClient;
 use Voltaria\Accounts\AccountsClient;
+use Voltaria\Collections\CollectionsClient;
 use Voltaria\Documents\DocumentsClient;
 use Voltaria\Investors\InvestorsClient;
 use Voltaria\Installments\InstallmentsClient;
@@ -32,6 +33,11 @@ class VoltariaClient
      * @var AccountsClient $accounts
      */
     public AccountsClient $accounts;
+
+    /**
+     * @var CollectionsClient $collections
+     */
+    public CollectionsClient $collections;
 
     /**
      * @var DocumentsClient $documents
@@ -123,6 +129,7 @@ class VoltariaClient
         $this->clients = new ClientsClient($this->client, $this->options);
         $this->sandbox = new SandboxClient($this->client, $this->options);
         $this->accounts = new AccountsClient($this->client, $this->options);
+        $this->collections = new CollectionsClient($this->client, $this->options);
         $this->documents = new DocumentsClient($this->client, $this->options);
         $this->investors = new InvestorsClient($this->client, $this->options);
         $this->installments = new InstallmentsClient($this->client, $this->options);

@@ -119,6 +119,18 @@ class LoanResponseWithClientInfo extends JsonSerializableType
     public ClientBaseInfo $client;
 
     /**
+     * @var ?string $outstandingPrincipal Remaining principal for installments with status active or overdue, net of any repayments already made
+     */
+    #[JsonProperty('outstanding_principal')]
+    public ?string $outstandingPrincipal;
+
+    /**
+     * @var ?string $remainingAmount Remaining amount (principal and interest) for installments with status active or overdue, net of any repayments already made
+     */
+    #[JsonProperty('remaining_amount')]
+    public ?string $remainingAmount;
+
+    /**
      * @param array{
      *   id: string,
      *   createdAt: DateTime,
@@ -138,6 +150,8 @@ class LoanResponseWithClientInfo extends JsonSerializableType
      *   earlySettlementDate?: ?DateTime,
      *   earlySettlementAmount?: ?string,
      *   data?: ?array<string, mixed>,
+     *   outstandingPrincipal?: ?string,
+     *   remainingAmount?: ?string,
      * } $values
      */
     public function __construct(
@@ -161,6 +175,8 @@ class LoanResponseWithClientInfo extends JsonSerializableType
         $this->earlySettlementAmount = $values['earlySettlementAmount'] ?? null;
         $this->data = $values['data'] ?? null;
         $this->client = $values['client'];
+        $this->outstandingPrincipal = $values['outstandingPrincipal'] ?? null;
+        $this->remainingAmount = $values['remainingAmount'] ?? null;
     }
 
     /**

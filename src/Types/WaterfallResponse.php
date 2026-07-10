@@ -40,22 +40,22 @@ class WaterfallResponse extends JsonSerializableType
     public string $status;
 
     /**
-     * @var ?string $cashBalance The cash balance associated with the waterfall
+     * @var ?string $amount The payment amount recorded for the waterfall
      */
-    #[JsonProperty('cash_balance')]
-    public ?string $cashBalance;
+    #[JsonProperty('amount')]
+    public ?string $amount;
 
     /**
-     * @var ?string $cashBalanceCurrency The currency of the cash balance
+     * @var ?string $currency The currency of the payment
      */
-    #[JsonProperty('cash_balance_currency')]
-    public ?string $cashBalanceCurrency;
+    #[JsonProperty('currency')]
+    public ?string $currency;
 
     /**
-     * @var ?DateTime $cashBalanceDate The date of the cash balance
+     * @var ?DateTime $paymentDate The date the payment was made
      */
-    #[JsonProperty('cash_balance_date'), Date(Date::TYPE_DATE)]
-    public ?DateTime $cashBalanceDate;
+    #[JsonProperty('payment_date'), Date(Date::TYPE_DATE)]
+    public ?DateTime $paymentDate;
 
     /**
      * @var ?string $fileUrl The Presigned URL of the file. This is a temporary URL that allows you to download the file.
@@ -84,9 +84,9 @@ class WaterfallResponse extends JsonSerializableType
      *   status: value-of<WaterfallStatusEnum>,
      *   createdAt: DateTime,
      *   updatedAt: DateTime,
-     *   cashBalance?: ?string,
-     *   cashBalanceCurrency?: ?string,
-     *   cashBalanceDate?: ?DateTime,
+     *   amount?: ?string,
+     *   currency?: ?string,
+     *   paymentDate?: ?DateTime,
      *   fileUrl?: ?string,
      * } $values
      */
@@ -98,9 +98,9 @@ class WaterfallResponse extends JsonSerializableType
         $this->name = $values['name'];
         $this->date = $values['date'];
         $this->status = $values['status'];
-        $this->cashBalance = $values['cashBalance'] ?? null;
-        $this->cashBalanceCurrency = $values['cashBalanceCurrency'] ?? null;
-        $this->cashBalanceDate = $values['cashBalanceDate'] ?? null;
+        $this->amount = $values['amount'] ?? null;
+        $this->currency = $values['currency'] ?? null;
+        $this->paymentDate = $values['paymentDate'] ?? null;
         $this->fileUrl = $values['fileUrl'] ?? null;
         $this->createdAt = $values['createdAt'];
         $this->updatedAt = $values['updatedAt'];
