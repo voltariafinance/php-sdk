@@ -11,6 +11,7 @@ use Voltaria\Investors\InvestorsClient;
 use Voltaria\Installments\InstallmentsClient;
 use Voltaria\Loans\LoansClient;
 use Voltaria\Partners\PartnersClient;
+use Voltaria\Recoveries\RecoveriesClient;
 use Voltaria\Webhooks\WebhooksClient;
 use Voltaria\Repayments\RepaymentsClient;
 use Voltaria\Drawdowns\DrawdownsClient;
@@ -63,6 +64,11 @@ class VoltariaClient
      * @var PartnersClient $partners
      */
     public PartnersClient $partners;
+
+    /**
+     * @var RecoveriesClient $recoveries
+     */
+    public RecoveriesClient $recoveries;
 
     /**
      * @var WebhooksClient $webhooks
@@ -135,6 +141,7 @@ class VoltariaClient
         $this->installments = new InstallmentsClient($this->client, $this->options);
         $this->loans = new LoansClient($this->client, $this->options);
         $this->partners = new PartnersClient($this->client, $this->options);
+        $this->recoveries = new RecoveriesClient($this->client, $this->options);
         $this->webhooks = new WebhooksClient($this->client, $this->options);
         $this->repayments = new RepaymentsClient($this->client, $this->options);
         $this->drawdowns = new DrawdownsClient($this->client, $this->options);
