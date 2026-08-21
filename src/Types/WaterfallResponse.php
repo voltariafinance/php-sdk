@@ -46,7 +46,7 @@ class WaterfallResponse extends JsonSerializableType
     public ?string $amount;
 
     /**
-     * @var ?string $currency The currency of the payment
+     * @var ?value-of<CurrencyEnum> $currency The currency of the payment
      */
     #[JsonProperty('currency')]
     public ?string $currency;
@@ -85,7 +85,7 @@ class WaterfallResponse extends JsonSerializableType
      *   createdAt: DateTime,
      *   updatedAt: DateTime,
      *   amount?: ?string,
-     *   currency?: ?string,
+     *   currency?: ?value-of<CurrencyEnum>,
      *   paymentDate?: ?DateTime,
      *   fileUrl?: ?string,
      * } $values
