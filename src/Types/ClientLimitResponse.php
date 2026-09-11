@@ -10,49 +10,49 @@ use Voltaria\Core\Types\Date;
 class ClientLimitResponse extends JsonSerializableType
 {
     /**
-     * @var value-of<CurrencyEnum> $currency
+     * @var value-of<CurrencyEnum> $currency The currency the limit is denominated in
      */
     #[JsonProperty('currency')]
     public string $currency;
 
     /**
-     * @var int $maxMaturityDays
+     * @var int $maxMaturityDays The longest loan maturity this limit allows, in days
      */
     #[JsonProperty('max_maturity_days')]
     public int $maxMaturityDays;
 
     /**
-     * @var string $limit
+     * @var string $limit The credit limit granted to the client
      */
     #[JsonProperty('limit')]
     public string $limit;
 
     /**
-     * @var string $rate
+     * @var string $rate The rate recorded on this limit
      */
     #[JsonProperty('rate')]
     public string $rate;
 
     /**
-     * @var string $outstanding
+     * @var string $outstanding Principal currently outstanding against this limit
      */
     #[JsonProperty('outstanding')]
     public string $outstanding;
 
     /**
-     * @var string $available
+     * @var string $available Limit minus outstanding. Negative when the client is over limit
      */
     #[JsonProperty('available')]
     public string $available;
 
     /**
-     * @var DateTime $createdAt
+     * @var DateTime $createdAt When the limit was granted
      */
     #[JsonProperty('created_at'), Date(Date::TYPE_DATETIME)]
     public DateTime $createdAt;
 
     /**
-     * @var DateTime $updatedAt
+     * @var DateTime $updatedAt When the limit was last changed
      */
     #[JsonProperty('updated_at'), Date(Date::TYPE_DATETIME)]
     public DateTime $updatedAt;

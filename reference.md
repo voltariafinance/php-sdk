@@ -3920,6 +3920,71 @@ $client->loans->deleteLoan(
 </dl>
 </details>
 
+<details><summary><code>$client-&gt;loans-&gt;calculateSettlement($loanId, $request) -> ?EarlySettlementResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Calculate the indicative early settlement figure for a loan as of the given settlement date. The amount is indicative only, not a binding quote, and has no validity period — it changes as repayments are recorded and as the settlement date moves. Confirm the final amount with Voltaria before collecting from the borrower.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->loans->calculateSettlement(
+    'loan_id',
+    new EarlySettlementPayload([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$loanId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$settlementDate:** `?DateTime` — Date the loan would be settled. Must be today or later. Defaults to today when omitted.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>$client-&gt;loans-&gt;createBulkLoans($request) -> ?BulkLoanTaskResponse</code></summary>
 <dl>
 <dd>

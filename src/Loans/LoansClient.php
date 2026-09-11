@@ -20,6 +20,8 @@ use Voltaria\Types\PaginatedResponseLoanResponseWithClientInfo;
 use Voltaria\Loans\Requests\LoanCreatePayload;
 use Voltaria\Types\LoanResponseWithInstallments;
 use Voltaria\Core\Json\JsonDecoder;
+use Voltaria\Loans\Requests\EarlySettlementPayload;
+use Voltaria\Types\EarlySettlementResponse;
 use Voltaria\Loans\Requests\BulkLoanCreatePayload;
 use Voltaria\Types\BulkLoanTaskResponse;
 use Voltaria\Types\BulkLoanTaskStatus;
@@ -423,6 +425,56 @@ class LoansClient
                     return null;
                 }
                 return JsonDecoder::decodeArray($json, ['string' => 'mixed']); // @phpstan-ignore-line
+            }
+        } catch (JsonException $e) {
+            throw new VoltariaException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new VoltariaException(message: $e->getMessage(), previous: $e);
+        }
+        throw new VoltariaApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Calculate the indicative early settlement figure for a loan as of the given settlement date. The amount is indicative only, not a binding quote, and has no validity period — it changes as repayments are recorded and as the settlement date moves. Confirm the final amount with Voltaria before collecting from the borrower.
+     *
+     * @param string $loanId
+     * @param EarlySettlementPayload $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?EarlySettlementResponse
+     * @throws VoltariaException
+     * @throws VoltariaApiException
+     */
+    public function calculateSettlement(string $loanId, EarlySettlementPayload $request = new EarlySettlementPayload(), ?array $options = null): ?EarlySettlementResponse
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Sandbox->value,
+                    path: "v2/loans/{$loanId}/calculate-settlement",
+                    method: HttpMethod::POST,
+                    body: $request,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return EarlySettlementResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new VoltariaException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
