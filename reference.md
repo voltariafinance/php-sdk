@@ -5388,6 +5388,601 @@ $client->repayments->getBulkRepaymentStatus(
 </dl>
 </details>
 
+## Tasks
+<details><summary><code>$client-&gt;tasks-&gt;listTasks($request) -> ?PaginatedResponseTaskPartnerResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Paginated list of the tasks shared with your partner account, optionally filtered by status or by the client, loan, installment or waterfall they relate to.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->tasks->listTasks(
+    new ListTasksRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$status:** `?string` — Filter by task status.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$clientId:** `?string` — Filter by client.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$loanId:** `?string` — Filter by loan.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$installmentId:** `?string` — Filter by installment.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$waterfallId:** `?string` — Filter by waterfall.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$page:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$pageSize:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$orderBy:** `?string` — Field to order the results by, e.g., 'due_at:asc,created_at:desc'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$q:** `?string` — Query string for filtering. Format: "field:operator:value;...". Supported fields: id, status, priority, due_at, created_at, client_id, loan_id, installment_id, waterfall_id. Supported operators: is, in, not_in, contains, not_contains, like, not_like, ilike, not_ilike, gt, gte, lt, lte, starts_with, ends_with, is_null, is_not_null.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;tasks-&gt;createTask($request) -> ?TaskPartnerResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Open a task for your partner account. Any entity you link to it must belong to you.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->tasks->createTask(
+    new TaskPartnerCreatePayload([
+        'title' => 'Send updated bank statement',
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$title:** `string` — Short title of the task.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$description:** `?string` — Optional longer description of what needs to be done.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$priority:** `?string` — Task priority. One of the following: low, medium, high, urgent
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$dueAt:** `?DateTime` — Optional due date for the task.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$clientId:** `?string` — Client this task relates to. Must belong to your partner account.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$loanId:** `?string` — Loan this task relates to. Must belong to your partner account.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$installmentId:** `?string` — Installment this task relates to. Must belong to your partner account.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$waterfallId:** `?string` — Waterfall this task relates to. Must belong to your partner account.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;tasks-&gt;getTask($taskId) -> ?TaskPartnerResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve one of your tasks by its ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->tasks->getTask(
+    'task_id',
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$taskId:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;tasks-&gt;updateTaskStatus($taskId, $request) -> ?TaskPartnerResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Move one of your tasks to another status. Status is the only field you can change. Requires a signed-in user — API keys cannot change a task.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->tasks->updateTaskStatus(
+    'task_id',
+    new TaskPartnerStatusUpdatePayload([
+        'status' => TaskPartnerStatusUpdatePayloadStatus::Active->value,
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$taskId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$status:** `string` — The new status of the task. One of the following: active, in_progress, blocked, done. You can move a task to any of these at any time, so one closed by mistake can be reopened. Every change is kept in the task's status history.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;tasks-&gt;listTaskStatusHistory($taskId, $request) -> ?PaginatedResponseTaskPartnerStatusHistoryResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+The status transitions of one of your tasks, and whether each one was made by your team or by Voltaria support.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->tasks->listTaskStatusHistory(
+    'task_id',
+    new ListTaskStatusHistoryRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$taskId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$page:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$pageSize:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$orderBy:** `?string` — Field to order the results by, e.g., 'created_at:asc'. Defaults to 'created_at:desc'.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;tasks-&gt;listTaskNotes($taskId, $request) -> ?PaginatedResponseNoteResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Notes exchanged with Voltaria on one of your tasks.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->tasks->listTaskNotes(
+    'task_id',
+    new ListTaskNotesRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$taskId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$page:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$pageSize:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$orderBy:** `?string` — Field to order the results by, e.g., 'created_at:desc'. Defaults to 'created_at:desc'.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$q:** `?string` — Query string for filtering. Format: "field:operator:value;...". Supported fields: id, loan_id, installment_id, created_at. Supported operators: is, in, not_in, contains, not_contains, like, not_like, ilike, not_ilike, gt, gte, lt, lte, starts_with, ends_with, is_null, is_not_null.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;tasks-&gt;createTaskNote($taskId, $request) -> ?NoteResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Add a note to one of your tasks. Requires a signed-in user — API keys cannot write notes, because a note needs an author.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->tasks->createTaskNote(
+    'task_id',
+    new TaskNoteCreatePayload([
+        'content' => 'Statement uploaded, please re-check.',
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$taskId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$content:** `string` — The note content.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Drawdowns
 <details><summary><code>$client-&gt;drawdowns-&gt;listDrawdowns($request) -> ?PaginatedResponseDrawdownResponse</code></summary>
 <dl>

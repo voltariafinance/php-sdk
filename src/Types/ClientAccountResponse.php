@@ -88,6 +88,12 @@ class ClientAccountResponse extends JsonSerializableType
     public string $status;
 
     /**
+     * @var ?value-of<CopStatusEnum> $copStatus Confirmation of Payee result for this account. `null` when the account has never been checked, or when the check does not apply to it. One of: `matched`, `close_match`, `not_matched`, `account_not_found`, `unavailable`.
+     */
+    #[JsonProperty('cop_status')]
+    public ?string $copStatus;
+
+    /**
      * @var DateTime $createdAt Timestamp when the account was created.
      */
     #[JsonProperty('created_at'), Date(Date::TYPE_DATETIME)]
@@ -109,6 +115,7 @@ class ClientAccountResponse extends JsonSerializableType
      *   routingNumber?: ?string,
      *   accountType?: ?string,
      *   address?: ?AccountAddress,
+     *   copStatus?: ?value-of<CopStatusEnum>,
      * } $values
      */
     public function __construct(
@@ -127,6 +134,7 @@ class ClientAccountResponse extends JsonSerializableType
         $this->accountType = $values['accountType'] ?? null;
         $this->address = $values['address'] ?? null;
         $this->status = $values['status'];
+        $this->copStatus = $values['copStatus'] ?? null;
         $this->createdAt = $values['createdAt'];
     }
 

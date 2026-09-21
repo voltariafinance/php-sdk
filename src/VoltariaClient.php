@@ -14,6 +14,7 @@ use Voltaria\Partners\PartnersClient;
 use Voltaria\Recoveries\RecoveriesClient;
 use Voltaria\Webhooks\WebhooksClient;
 use Voltaria\Repayments\RepaymentsClient;
+use Voltaria\Tasks\TasksClient;
 use Voltaria\Drawdowns\DrawdownsClient;
 use Psr\Http\Client\ClientInterface;
 use Voltaria\Core\Client\RawClient;
@@ -81,6 +82,11 @@ class VoltariaClient
     public RepaymentsClient $repayments;
 
     /**
+     * @var TasksClient $tasks
+     */
+    public TasksClient $tasks;
+
+    /**
      * @var DrawdownsClient $drawdowns
      */
     public DrawdownsClient $drawdowns;
@@ -144,6 +150,7 @@ class VoltariaClient
         $this->recoveries = new RecoveriesClient($this->client, $this->options);
         $this->webhooks = new WebhooksClient($this->client, $this->options);
         $this->repayments = new RepaymentsClient($this->client, $this->options);
+        $this->tasks = new TasksClient($this->client, $this->options);
         $this->drawdowns = new DrawdownsClient($this->client, $this->options);
     }
 }
