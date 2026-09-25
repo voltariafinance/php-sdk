@@ -160,6 +160,9 @@ class DocumentsClient
         if ($request->waterfallId != null) {
             $query['waterfall_id'] = $request->waterfallId;
         }
+        if ($request->taskId != null) {
+            $query['task_id'] = $request->taskId;
+        }
         $body = new MultipartFormData();
         $body->add(name: 'category', value: $request->category);
         $body->add(name: 'file_name', value: $request->fileName);

@@ -2150,6 +2150,14 @@ $client->documents->uploadDocument(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**$taskId:** `?string` — The task this document answers, if any.
+    
+</dd>
+</dl>
 </dd>
 </dl>
 

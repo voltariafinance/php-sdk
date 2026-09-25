@@ -31,7 +31,7 @@ class TaskPartnerResponse extends JsonSerializableType
     public ?string $description;
 
     /**
-     * @var value-of<TaskStatusEnum> $status The status of the task. One of the following: active, in_progress, blocked, done, cancelled
+     * @var value-of<TaskStatusEnum> $status The status of the task. One of the following: active, in_progress, blocked, review_needed, done, cancelled
      */
     #[JsonProperty('status')]
     public string $status;

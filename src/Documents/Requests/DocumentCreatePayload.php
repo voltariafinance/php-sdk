@@ -29,6 +29,11 @@ class DocumentCreatePayload extends JsonSerializableType
     public ?string $waterfallId;
 
     /**
+     * @var ?string $taskId The task this document answers, if any.
+     */
+    public ?string $taskId;
+
+    /**
      * @var string $category The category of the document. Available options can be fetched from the available categories endpoint. '.../documents/available-categories'.
      */
     #[JsonProperty('category')]
@@ -54,6 +59,7 @@ class DocumentCreatePayload extends JsonSerializableType
      *   loanId?: ?string,
      *   installmentId?: ?string,
      *   waterfallId?: ?string,
+     *   taskId?: ?string,
      * } $values
      */
     public function __construct(
@@ -63,6 +69,7 @@ class DocumentCreatePayload extends JsonSerializableType
         $this->loanId = $values['loanId'] ?? null;
         $this->installmentId = $values['installmentId'] ?? null;
         $this->waterfallId = $values['waterfallId'] ?? null;
+        $this->taskId = $values['taskId'] ?? null;
         $this->category = $values['category'];
         $this->fileName = $values['fileName'];
         $this->file = $values['file'];
