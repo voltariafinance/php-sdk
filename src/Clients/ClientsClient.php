@@ -28,6 +28,8 @@ use Voltaria\Clients\Requests\ClientUserInviteRequest;
 use Voltaria\Types\ClientUserResponse;
 use Voltaria\Clients\Requests\ListClientWaiversRequest;
 use Voltaria\Types\PaginatedResponseWaiverResponse;
+use Voltaria\Clients\Requests\ListClientLimitsRequest;
+use Voltaria\Types\PaginatedResponseClientLimitHistoryResponse;
 use Voltaria\Core\Json\JsonDecoder;
 use Voltaria\Clients\Requests\ListClientChecklistSummariesRequest;
 use Voltaria\Types\PaginatedResponseChecklistSummaryPartnerResponse;
@@ -705,6 +707,69 @@ class ClientsClient
                     return null;
                 }
                 return PaginatedResponseWaiverResponse::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new VoltariaException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new VoltariaException(message: $e->getMessage(), previous: $e);
+        }
+        throw new VoltariaApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Retrieve every credit limit granted to a specific client.
+     *
+     * @param string $clientId
+     * @param ListClientLimitsRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?PaginatedResponseClientLimitHistoryResponse
+     * @throws VoltariaException
+     * @throws VoltariaApiException
+     */
+    public function listClientLimits(string $clientId, ListClientLimitsRequest $request = new ListClientLimitsRequest(), ?array $options = null): ?PaginatedResponseClientLimitHistoryResponse
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $query = [];
+        if ($request->page != null) {
+            $query['page'] = $request->page;
+        }
+        if ($request->pageSize != null) {
+            $query['page_size'] = $request->pageSize;
+        }
+        if ($request->orderBy != null) {
+            $query['order_by'] = $request->orderBy;
+        }
+        if ($request->q != null) {
+            $query['q'] = $request->q;
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Sandbox->value,
+                    path: "v2/clients/{$clientId}/limits",
+                    method: HttpMethod::GET,
+                    query: $query,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return PaginatedResponseClientLimitHistoryResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new VoltariaException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

@@ -933,6 +933,95 @@ $client->clients->listClientWaivers(
 </dl>
 </details>
 
+<details><summary><code>$client-&gt;clients-&gt;listClientLimits($clientId, $request) -> ?PaginatedResponseClientLimitHistoryResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve every credit limit granted to a specific client.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->clients->listClientLimits(
+    'client_id',
+    new ListClientLimitsRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$clientId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$page:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$pageSize:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$orderBy:** `?string` — Field to order the results by, e.g., 'created_at:desc'
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$q:** `?string` — Query string for filtering. Format: "field:operator:value;...". Supported fields: id, currency, created_at, limit. Supported operators: is, in, not_in, contains, not_contains, like, not_like, ilike, not_ilike, gt, gte, lt, lte, starts_with, ends_with, is_null, is_not_null.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>$client-&gt;clients-&gt;getClientById($clientId) -> ?ClientResponse</code></summary>
 <dl>
 <dd>
