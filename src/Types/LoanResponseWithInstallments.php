@@ -107,6 +107,12 @@ class LoanResponseWithInstallments extends JsonSerializableType
     public ?string $earlySettlementAmount;
 
     /**
+     * @var value-of<LoanRepaymentMethodEnum> $repaymentMethod How each installment is split into principal and interest
+     */
+    #[JsonProperty('repayment_method')]
+    public string $repaymentMethod;
+
+    /**
      * @var ?array<string, mixed> $data Additional data related to the loan
      */
     #[JsonProperty('data'), ArrayType(['string' => 'mixed'])]
@@ -129,6 +135,7 @@ class LoanResponseWithInstallments extends JsonSerializableType
      *   amount: string,
      *   status: value-of<LoanStatusEnum>,
      *   currencyRate: string,
+     *   repaymentMethod: value-of<LoanRepaymentMethodEnum>,
      *   irr?: ?string,
      *   loanDate?: ?DateTime,
      *   correlationId?: ?string,
@@ -159,6 +166,7 @@ class LoanResponseWithInstallments extends JsonSerializableType
         $this->paymentReference = $values['paymentReference'] ?? null;
         $this->earlySettlementDate = $values['earlySettlementDate'] ?? null;
         $this->earlySettlementAmount = $values['earlySettlementAmount'] ?? null;
+        $this->repaymentMethod = $values['repaymentMethod'];
         $this->data = $values['data'] ?? null;
         $this->installments = $values['installments'] ?? null;
     }

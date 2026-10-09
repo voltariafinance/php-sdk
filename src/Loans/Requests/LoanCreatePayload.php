@@ -10,6 +10,7 @@ use DateTime;
 use Voltaria\Core\Types\Date;
 use Voltaria\Types\LoanInstallmentCreatePayload;
 use Voltaria\Core\Types\ArrayType;
+use Voltaria\Types\LoanRepaymentMethodEnum;
 
 class LoanCreatePayload extends JsonSerializableType
 {
@@ -53,6 +54,12 @@ class LoanCreatePayload extends JsonSerializableType
     public array $installments;
 
     /**
+     * @var ?value-of<LoanRepaymentMethodEnum> $repaymentMethod How each installment is split into principal and interest: pmt (amortising) or constant_principal (loan amount divided equally across installments, the rest is interest)
+     */
+    #[JsonProperty('repayment_method')]
+    public ?string $repaymentMethod;
+
+    /**
      * @var ?array<string, mixed> $data Additional data related to the loan
      */
     #[JsonProperty('data'), ArrayType(['string' => 'mixed'])]
@@ -69,6 +76,7 @@ class LoanCreatePayload extends JsonSerializableType
      *   installments: array<LoanInstallmentCreatePayload>,
      *   correlationId?: ?string,
      *   loanDate?: ?DateTime,
+     *   repaymentMethod?: ?value-of<LoanRepaymentMethodEnum>,
      *   data?: ?array<string, mixed>,
      * } $values
      */
@@ -81,6 +89,7 @@ class LoanCreatePayload extends JsonSerializableType
         $this->correlationId = $values['correlationId'] ?? null;
         $this->loanDate = $values['loanDate'] ?? null;
         $this->installments = $values['installments'];
+        $this->repaymentMethod = $values['repaymentMethod'] ?? null;
         $this->data = $values['data'] ?? null;
     }
 }

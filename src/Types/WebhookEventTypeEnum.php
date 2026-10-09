@@ -9,4 +9,5 @@ enum WebhookEventTypeEnum: string
     case ClientUpdated = "client.updated";
     case ClientLimitUpdated = "client.limit.updated";
     case PartnerLimitUpdated = "partner.limit.updated";
+    case BankConnectionUpdated = "bank_connection.updated";
 }

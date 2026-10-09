@@ -28,7 +28,7 @@ class WebhookSubscriptionResponse extends JsonSerializableType
     public ?string $description;
 
     /**
-     * @var value-of<WebhookEventTypeEnum> $eventType Event type subscribed toPossible values: loan_updated, installment_updated, client_updated, client_limit_updated, partner_limit_updated
+     * @var value-of<WebhookEventTypeEnum> $eventType Event type subscribed toPossible values: loan_updated, installment_updated, client_updated, client_limit_updated, partner_limit_updated, bank_connection_updated
      */
     #[JsonProperty('event_type')]
     public string $eventType;

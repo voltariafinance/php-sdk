@@ -15,7 +15,7 @@ class WebhookTestSandbox extends JsonSerializableType
     public ?string $webhookId;
 
     /**
-     * @var value-of<WebhookEventTypeEnum> $eventType Event type to trigger for the test. All subscriptions for this event type will be triggered if webhook_id is not provided.Possible values: loan_updated, installment_updated, client_updated, client_limit_updated, partner_limit_updated
+     * @var value-of<WebhookEventTypeEnum> $eventType Event type to trigger for the test. All subscriptions for this event type will be triggered if webhook_id is not provided.Possible values: loan_updated, installment_updated, client_updated, client_limit_updated, partner_limit_updated, bank_connection_updated
      */
     #[JsonProperty('event_type')]
     public string $eventType;
