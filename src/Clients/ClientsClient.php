@@ -30,9 +30,16 @@ use Voltaria\Clients\Requests\ListClientWaiversRequest;
 use Voltaria\Types\PaginatedResponseWaiverResponse;
 use Voltaria\Clients\Requests\ListClientLimitsRequest;
 use Voltaria\Types\PaginatedResponseClientLimitHistoryResponse;
+use Voltaria\Clients\Requests\ListClientCounterpartiesRequest;
+use Voltaria\Types\PaginatedResponseClientCounterpartyResponse;
+use Voltaria\Clients\Requests\ClientCounterpartyCreatePayload;
+use Voltaria\Types\ClientCounterpartyResponse;
+use Voltaria\Clients\Requests\ClientCounterpartyUpdatePayload;
 use Voltaria\Core\Json\JsonDecoder;
 use Voltaria\Clients\Requests\ListClientChecklistSummariesRequest;
 use Voltaria\Types\PaginatedResponseChecklistSummaryPartnerResponse;
+use Voltaria\Clients\Requests\ListAllClientCounterpartiesRequest;
+use Voltaria\Types\PaginatedResponseClientCounterpartyWithClientResponse;
 
 class ClientsClient
 {
@@ -784,6 +791,170 @@ class ClientsClient
     }
 
     /**
+     * Retrieve the counterparties of a specific client, e.g. its debtors or installers.
+     *
+     * @param string $clientId
+     * @param ListClientCounterpartiesRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?PaginatedResponseClientCounterpartyResponse
+     * @throws VoltariaException
+     * @throws VoltariaApiException
+     */
+    public function listClientCounterparties(string $clientId, ListClientCounterpartiesRequest $request = new ListClientCounterpartiesRequest(), ?array $options = null): ?PaginatedResponseClientCounterpartyResponse
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $query = [];
+        if ($request->page != null) {
+            $query['page'] = $request->page;
+        }
+        if ($request->pageSize != null) {
+            $query['page_size'] = $request->pageSize;
+        }
+        if ($request->orderBy != null) {
+            $query['order_by'] = $request->orderBy;
+        }
+        if ($request->q != null) {
+            $query['q'] = $request->q;
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Sandbox->value,
+                    path: "v2/clients/{$clientId}/counterparties",
+                    method: HttpMethod::GET,
+                    query: $query,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return PaginatedResponseClientCounterpartyResponse::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new VoltariaException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new VoltariaException(message: $e->getMessage(), previous: $e);
+        }
+        throw new VoltariaApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Add a counterparty to a specific client. It starts with your default counterparty status.
+     *
+     * @param string $clientId
+     * @param ClientCounterpartyCreatePayload $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?ClientCounterpartyResponse
+     * @throws VoltariaException
+     * @throws VoltariaApiException
+     */
+    public function createClientCounterparty(string $clientId, ClientCounterpartyCreatePayload $request, ?array $options = null): ?ClientCounterpartyResponse
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Sandbox->value,
+                    path: "v2/clients/{$clientId}/counterparties",
+                    method: HttpMethod::POST,
+                    body: $request,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return ClientCounterpartyResponse::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new VoltariaException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new VoltariaException(message: $e->getMessage(), previous: $e);
+        }
+        throw new VoltariaApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Update the details of a counterparty of a specific client.
+     *
+     * @param string $clientId
+     * @param string $counterpartyId
+     * @param ClientCounterpartyUpdatePayload $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?ClientCounterpartyResponse
+     * @throws VoltariaException
+     * @throws VoltariaApiException
+     */
+    public function updateClientCounterparty(string $clientId, string $counterpartyId, ClientCounterpartyUpdatePayload $request = new ClientCounterpartyUpdatePayload(), ?array $options = null): ?ClientCounterpartyResponse
+    {
+        $options = array_merge($this->options, $options ?? []);
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Sandbox->value,
+                    path: "v2/clients/{$clientId}/counterparties/{$counterpartyId}",
+                    method: HttpMethod::PATCH,
+                    body: $request,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return ClientCounterpartyResponse::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new VoltariaException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new VoltariaException(message: $e->getMessage(), previous: $e);
+        }
+        throw new VoltariaApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
      * Retrieve detailed information for a specific client using their client ID.
      *
      * @param string $clientId
@@ -923,6 +1094,68 @@ class ClientsClient
                     return null;
                 }
                 return PaginatedResponseChecklistSummaryPartnerResponse::fromJson($json);
+            }
+        } catch (JsonException $e) {
+            throw new VoltariaException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (ClientExceptionInterface $e) {
+            throw new VoltariaException(message: $e->getMessage(), previous: $e);
+        }
+        throw new VoltariaApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * Retrieve the counterparties of all your clients, e.g. their debtors or installers, with each client's name.
+     *
+     * @param ListAllClientCounterpartiesRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?PaginatedResponseClientCounterpartyWithClientResponse
+     * @throws VoltariaException
+     * @throws VoltariaApiException
+     */
+    public function listAllClientCounterparties(ListAllClientCounterpartiesRequest $request = new ListAllClientCounterpartiesRequest(), ?array $options = null): ?PaginatedResponseClientCounterpartyWithClientResponse
+    {
+        $options = array_merge($this->options, $options ?? []);
+        $query = [];
+        if ($request->page != null) {
+            $query['page'] = $request->page;
+        }
+        if ($request->pageSize != null) {
+            $query['page_size'] = $request->pageSize;
+        }
+        if ($request->orderBy != null) {
+            $query['order_by'] = $request->orderBy;
+        }
+        if ($request->q != null) {
+            $query['q'] = $request->q;
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? Environments::Sandbox->value,
+                    path: "v2/client-counterparties",
+                    method: HttpMethod::GET,
+                    query: $query,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400) {
+                $json = $response->getBody()->getContents();
+                if (empty($json)) {
+                    return null;
+                }
+                return PaginatedResponseClientCounterpartyWithClientResponse::fromJson($json);
             }
         } catch (JsonException $e) {
             throw new VoltariaException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);

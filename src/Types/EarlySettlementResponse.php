@@ -28,10 +28,10 @@ class EarlySettlementResponse extends JsonSerializableType
     public string $settlementAmount;
 
     /**
-     * @var string $settlementIrr The internal rate of return at early settlement
+     * @var ?string $settlementIrr The internal rate of return at early settlement; null when it is more than 3 times the loan's IRR, e.g. a minimum fee paid within days
      */
     #[JsonProperty('settlement_irr')]
-    public string $settlementIrr;
+    public ?string $settlementIrr;
 
     /**
      * @var ?string $originalIrr The original internal rate of return before early settlement
@@ -50,7 +50,7 @@ class EarlySettlementResponse extends JsonSerializableType
      *   loanId: string,
      *   settlementDate: DateTime,
      *   settlementAmount: string,
-     *   settlementIrr: string,
+     *   settlementIrr?: ?string,
      *   originalIrr?: ?string,
      *   minimumFee?: ?string,
      * } $values
@@ -61,7 +61,7 @@ class EarlySettlementResponse extends JsonSerializableType
         $this->loanId = $values['loanId'];
         $this->settlementDate = $values['settlementDate'];
         $this->settlementAmount = $values['settlementAmount'];
-        $this->settlementIrr = $values['settlementIrr'];
+        $this->settlementIrr = $values['settlementIrr'] ?? null;
         $this->originalIrr = $values['originalIrr'] ?? null;
         $this->minimumFee = $values['minimumFee'] ?? null;
     }

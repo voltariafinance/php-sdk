@@ -151,6 +151,9 @@ class DocumentsClient
         if ($request->clientId != null) {
             $query['client_id'] = $request->clientId;
         }
+        if ($request->clientCounterpartyId != null) {
+            $query['client_counterparty_id'] = $request->clientCounterpartyId;
+        }
         if ($request->loanId != null) {
             $query['loan_id'] = $request->loanId;
         }

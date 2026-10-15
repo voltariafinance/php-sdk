@@ -1022,6 +1022,284 @@ $client->clients->listClientLimits(
 </dl>
 </details>
 
+<details><summary><code>$client-&gt;clients-&gt;listClientCounterparties($clientId, $request) -> ?PaginatedResponseClientCounterpartyResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the counterparties of a specific client, e.g. its debtors or installers.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->clients->listClientCounterparties(
+    'client_id',
+    new ListClientCounterpartiesRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$clientId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$page:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$pageSize:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$orderBy:** `?string` — Field to order the results by, e.g., 'created_at:desc'
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$q:** `?string` — Query string for filtering. Format: "field:operator:value;...". Supported fields: id, client_id, name, country, company_number, status, created_at. Supported operators: is, in, not_in, contains, not_contains, like, not_like, ilike, not_ilike, gt, gte, lt, lte, starts_with, ends_with, is_null, is_not_null.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;clients-&gt;createClientCounterparty($clientId, $request) -> ?ClientCounterpartyResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Add a counterparty to a specific client. It starts with your default counterparty status.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->clients->createClientCounterparty(
+    'client_id',
+    new ClientCounterpartyCreatePayload([
+        'name' => 'Acme Installations Ltd',
+    ]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$clientId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$name:** `string` — The counterparty's legal or trading name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$country:** `?string` — ISO 3166-1 alpha-2 code of the country the counterparty is registered in
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$companyNumber:** `?string` — The counterparty's company registration number
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$notes:** `?string` — Free-text notes about the counterparty
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;clients-&gt;updateClientCounterparty($clientId, $counterpartyId, $request) -> ?ClientCounterpartyResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update the details of a counterparty of a specific client.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->clients->updateClientCounterparty(
+    'client_id',
+    'counterparty_id',
+    new ClientCounterpartyUpdatePayload([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$clientId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$counterpartyId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$name:** `?string` — The counterparty's legal or trading name
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$country:** `?string` — ISO 3166-1 alpha-2 code of the country the counterparty is registered in
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$companyNumber:** `?string` — The counterparty's company registration number
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$notes:** `?string` — Free-text notes about the counterparty
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>$client-&gt;clients-&gt;getClientById($clientId) -> ?ClientResponse</code></summary>
 <dl>
 <dd>
@@ -1196,6 +1474,86 @@ $client->clients->listClientChecklistSummaries(
 <dd>
 
 **$pageSize:** `?int` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>$client-&gt;clients-&gt;listAllClientCounterparties($request) -> ?PaginatedResponseClientCounterpartyWithClientResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve the counterparties of all your clients, e.g. their debtors or installers, with each client's name.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```php
+$client->clients->listAllClientCounterparties(
+    new ListAllClientCounterpartiesRequest([]),
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**$page:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$pageSize:** `?int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$orderBy:** `?string` — Field to order the results by, e.g., 'created_at:desc'
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$q:** `?string` — Query string for filtering. Format: "field:operator:value;...". Supported fields: id, client_id, name, country, company_number, status, created_at. Supported operators: is, in, not_in, contains, not_contains, like, not_like, ilike, not_ilike, gt, gte, lt, lte, starts_with, ends_with, is_null, is_not_null.
     
 </dd>
 </dl>
@@ -2151,7 +2509,7 @@ $client->documents->listDocuments(
 <dl>
 <dd>
 
-**$q:** `?string` — Query string for filtering. Format: "field:operator:value;...". Supported fields: id, client_id, loan_id, installment_id, waterfall_id, category, file_name, document_date, folder_path. Supported operators: is, in, not_in, contains, not_contains, like, not_like, ilike, not_ilike, gt, gte, lt, lte, starts_with, ends_with, is_null, is_not_null.
+**$q:** `?string` — Query string for filtering. Format: "field:operator:value;...". Supported fields: id, client_id, loan_id, installment_id, waterfall_id, client_counterparty_id, category, file_name, document_date, folder_path. Supported operators: is, in, not_in, contains, not_contains, like, not_like, ilike, not_ilike, gt, gte, lt, lte, starts_with, ends_with, is_null, is_not_null.
     
 </dd>
 </dl>
@@ -2212,6 +2570,14 @@ $client->documents->uploadDocument(
 <dd>
 
 **$clientId:** `?string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**$clientCounterpartyId:** `?string` — The ID of the client counterparty this document belongs to, if any. Requires `client_id`; the counterparty must belong to that client.
     
 </dd>
 </dl>

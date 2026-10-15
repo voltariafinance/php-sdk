@@ -14,6 +14,11 @@ class DocumentCreatePayload extends JsonSerializableType
     public ?string $clientId;
 
     /**
+     * @var ?string $clientCounterpartyId The ID of the client counterparty this document belongs to, if any. Requires `client_id`; the counterparty must belong to that client.
+     */
+    public ?string $clientCounterpartyId;
+
+    /**
      * @var ?string $loanId
      */
     public ?string $loanId;
@@ -56,6 +61,7 @@ class DocumentCreatePayload extends JsonSerializableType
      *   fileName: string,
      *   file: File,
      *   clientId?: ?string,
+     *   clientCounterpartyId?: ?string,
      *   loanId?: ?string,
      *   installmentId?: ?string,
      *   waterfallId?: ?string,
@@ -66,6 +72,7 @@ class DocumentCreatePayload extends JsonSerializableType
         array $values,
     ) {
         $this->clientId = $values['clientId'] ?? null;
+        $this->clientCounterpartyId = $values['clientCounterpartyId'] ?? null;
         $this->loanId = $values['loanId'] ?? null;
         $this->installmentId = $values['installmentId'] ?? null;
         $this->waterfallId = $values['waterfallId'] ?? null;

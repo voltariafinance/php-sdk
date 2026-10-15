@@ -40,6 +40,12 @@ class DocumentResponse extends JsonSerializableType
     public ?string $clientId;
 
     /**
+     * @var ?string $clientCounterpartyId The ID of the client counterparty the document belongs to, if applicable
+     */
+    #[JsonProperty('client_counterparty_id')]
+    public ?string $clientCounterpartyId;
+
+    /**
      * @var ?string $fileUrl The Presigned URL of the file. This is a temporary URL that allows you to download the file.
      */
     #[JsonProperty('file_url')]
@@ -95,6 +101,7 @@ class DocumentResponse extends JsonSerializableType
      *   fileType: string,
      *   createdAt: DateTime,
      *   clientId?: ?string,
+     *   clientCounterpartyId?: ?string,
      *   fileUrl?: ?string,
      *   loanId?: ?string,
      *   installmentId?: ?string,
@@ -112,6 +119,7 @@ class DocumentResponse extends JsonSerializableType
         $this->fileName = $values['fileName'];
         $this->fileType = $values['fileType'];
         $this->clientId = $values['clientId'] ?? null;
+        $this->clientCounterpartyId = $values['clientCounterpartyId'] ?? null;
         $this->fileUrl = $values['fileUrl'] ?? null;
         $this->loanId = $values['loanId'] ?? null;
         $this->installmentId = $values['installmentId'] ?? null;
