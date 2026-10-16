@@ -4267,6 +4267,14 @@ $client->loans->createLoan(
 <dl>
 <dd>
 
+**$clientCounterpartyId:** `?string` — The ID of the client counterparty this loan relates to. It must belong to the loan's client.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **$data:** `?array` — Additional data related to the loan
     
 </dd>

@@ -57,6 +57,12 @@ class BulkLoanItemPayload extends JsonSerializableType
     public ?string $repaymentMethod;
 
     /**
+     * @var ?string $clientCounterpartyId The ID of the client counterparty this loan relates to. It must belong to the loan's client.
+     */
+    #[JsonProperty('client_counterparty_id')]
+    public ?string $clientCounterpartyId;
+
+    /**
      * @var ?array<string, mixed> $data Additional data related to the loan
      */
     #[JsonProperty('data'), ArrayType(['string' => 'mixed'])]
@@ -74,6 +80,7 @@ class BulkLoanItemPayload extends JsonSerializableType
      *   correlationId?: ?string,
      *   loanDate?: ?DateTime,
      *   repaymentMethod?: ?value-of<LoanRepaymentMethodEnum>,
+     *   clientCounterpartyId?: ?string,
      *   data?: ?array<string, mixed>,
      * } $values
      */
@@ -87,6 +94,7 @@ class BulkLoanItemPayload extends JsonSerializableType
         $this->loanDate = $values['loanDate'] ?? null;
         $this->installments = $values['installments'];
         $this->repaymentMethod = $values['repaymentMethod'] ?? null;
+        $this->clientCounterpartyId = $values['clientCounterpartyId'] ?? null;
         $this->data = $values['data'] ?? null;
     }
 

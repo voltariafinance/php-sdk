@@ -113,6 +113,12 @@ class LoanInvestorResponse extends JsonSerializableType
     public string $repaymentMethod;
 
     /**
+     * @var ?string $clientCounterpartyId The ID of the client counterparty the loan relates to, if applicable
+     */
+    #[JsonProperty('client_counterparty_id')]
+    public ?string $clientCounterpartyId;
+
+    /**
      * @var ?array<string, mixed> $data Additional data related to the loan
      */
     #[JsonProperty('data'), ArrayType(['string' => 'mixed'])]
@@ -162,6 +168,7 @@ class LoanInvestorResponse extends JsonSerializableType
      *   paymentReference?: ?string,
      *   earlySettlementDate?: ?DateTime,
      *   earlySettlementAmount?: ?string,
+     *   clientCounterpartyId?: ?string,
      *   data?: ?array<string, mixed>,
      *   outstandingPrincipal?: ?string,
      *   remainingAmount?: ?string,
@@ -188,6 +195,7 @@ class LoanInvestorResponse extends JsonSerializableType
         $this->earlySettlementDate = $values['earlySettlementDate'] ?? null;
         $this->earlySettlementAmount = $values['earlySettlementAmount'] ?? null;
         $this->repaymentMethod = $values['repaymentMethod'];
+        $this->clientCounterpartyId = $values['clientCounterpartyId'] ?? null;
         $this->data = $values['data'] ?? null;
         $this->client = $values['client'];
         $this->outstandingPrincipal = $values['outstandingPrincipal'] ?? null;
