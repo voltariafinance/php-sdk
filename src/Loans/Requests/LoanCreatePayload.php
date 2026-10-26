@@ -54,7 +54,7 @@ class LoanCreatePayload extends JsonSerializableType
     public array $installments;
 
     /**
-     * @var ?value-of<LoanRepaymentMethodEnum> $repaymentMethod How each installment is split into principal and interest: pmt (amortising) or constant_principal (loan amount divided equally across installments, the rest is interest)
+     * @var ?value-of<LoanRepaymentMethodEnum> $repaymentMethod How each installment is split into principal and interest: pmt (amortising), constant_principal (loan amount divided equally across installments, the rest is interest) or custom (you send each installment's principal and interest; total principal must equal the loan amount, and the loan amount and installments cannot be changed later)
      */
     #[JsonProperty('repayment_method')]
     public ?string $repaymentMethod;

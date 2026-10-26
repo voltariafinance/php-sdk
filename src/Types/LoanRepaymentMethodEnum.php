@@ -6,4 +6,5 @@ enum LoanRepaymentMethodEnum: string
 {
     case Pmt = "pmt";
     case ConstantPrincipal = "constant_principal";
+    case Custom = "custom";
 }

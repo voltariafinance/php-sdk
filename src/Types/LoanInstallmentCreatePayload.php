@@ -26,12 +26,38 @@ class LoanInstallmentCreatePayload extends JsonSerializableType
     public float|string $amount;
 
     /**
+     * @var (
+     *    float
+     *   |string
+     * )|null $principal The principal part of the installment amount. Only when creating a loan with repayment_method custom, together with interest
+     */
+    #[JsonProperty('principal'), Union('float', 'string', 'null')]
+    public float|string|null $principal;
+
+    /**
+     * @var (
+     *    float
+     *   |string
+     * )|null $interest The interest part of the installment amount. Only when creating a loan with repayment_method custom, together with principal
+     */
+    #[JsonProperty('interest'), Union('float', 'string', 'null')]
+    public float|string|null $interest;
+
+    /**
      * @param array{
      *   expectedRepaymentAt: DateTime,
      *   amount: (
      *    float
      *   |string
      * ),
+     *   principal?: (
+     *    float
+     *   |string
+     * )|null,
+     *   interest?: (
+     *    float
+     *   |string
+     * )|null,
      * } $values
      */
     public function __construct(
@@ -39,6 +65,8 @@ class LoanInstallmentCreatePayload extends JsonSerializableType
     ) {
         $this->expectedRepaymentAt = $values['expectedRepaymentAt'];
         $this->amount = $values['amount'];
+        $this->principal = $values['principal'] ?? null;
+        $this->interest = $values['interest'] ?? null;
     }
 
     /**
