@@ -94,6 +94,12 @@ class ClientAccountResponse extends JsonSerializableType
     public ?string $copStatus;
 
     /**
+     * @var ?string $bankName Bank the sort code belongs to, from the account's Confirmation of Payee check. `null` when no check has named the bank: the account has never been checked, the check does not apply to it, or the provider returned no bank.
+     */
+    #[JsonProperty('bank_name')]
+    public ?string $bankName;
+
+    /**
      * @var DateTime $createdAt Timestamp when the account was created.
      */
     #[JsonProperty('created_at'), Date(Date::TYPE_DATETIME)]
@@ -116,6 +122,7 @@ class ClientAccountResponse extends JsonSerializableType
      *   accountType?: ?string,
      *   address?: ?AccountAddress,
      *   copStatus?: ?value-of<CopStatusEnum>,
+     *   bankName?: ?string,
      * } $values
      */
     public function __construct(
@@ -135,6 +142,7 @@ class ClientAccountResponse extends JsonSerializableType
         $this->address = $values['address'] ?? null;
         $this->status = $values['status'];
         $this->copStatus = $values['copStatus'] ?? null;
+        $this->bankName = $values['bankName'] ?? null;
         $this->createdAt = $values['createdAt'];
     }
 
